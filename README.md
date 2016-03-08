@@ -1,8 +1,9 @@
-AWS AMI Stats
+AWS Image Stats
 ==============
 
-Compile current AMI stats  
+Compile current Image (AMI, AKI, ARI) stats  
 
 TODO
-* Write db schema with indexes
-* Write insert statement
+
+* Move mysql login to ~/.my.cnf
+* Change repo name to aws-image-stats
