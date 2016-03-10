@@ -11,9 +11,10 @@ while(<FILE>)
 {
 	chomp; # remove end of line character
 	my @list = split('\t', $_);   
-	my $query = "uspInsertImage (" . "\"$list[0]\"" . ", " . "\"$list[1]\"" . "\"$list[2]\"" . ", " . "\"$list[3]\"" . ", " . "\"$list[4]\"" . ", " . "\"$list[5]\"" . ", ";
-	$query .= "\"$list[6]\"" . ", " . "\"$list[7]\"" . ", " . "\"$list[8]\"" . ", " . "\"none\"" . ", " . "\"$region\")";
-	# mysql insert query:  mysql -h "localhost" "aws_images" -e "$query"
-	print "mysql -e $query";
+	my $query = "\"call uspInsertImage(" . "\\\"$list[0]\\\"" . ", " . "\\\"$list[1]\\\"" . ", " ."\\\"$list[2]\\\"" . ", " . "\\\"$list[3]\\\"" . ", " . "\\\"$list[4]\\\"";
+	$query .= ", " . "\\\"$list[5]\\\"" . ", ";
+	$query .= "\\\"$list[6]\\\"" . ", " . "\\\"$list[7]\\\"" . ", " . "\\\"$list[8]\\\"" . ", " . "\\\"none\\\"" . ", " . "\\\"$region\\\");\"";
+	system("mysql \"aws_images\" -e $query");
+
 	die;
 }

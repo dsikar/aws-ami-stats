@@ -5,6 +5,8 @@ Compile current Image (AMI, AKI, ARI) stats
 
 TODO
 
-* Move mysql login to ~/.my.cnf
-* Need perhaps a better description as the vast majority of images are machine images.
 * Create data directory for image data
+* Parse date time in stored procedure and store as datetime data type.
+* Change CreationDate column data type to datetime.
+* Create lookup tables for enum types (Root Device Type, etc).
+
