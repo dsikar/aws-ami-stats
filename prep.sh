@@ -17,7 +17,7 @@ fi
 aws ec2 describe-regions | awk '{print $3}' >> ~/regions.txt
 
 # AMI query
-query="aws ec2 describe-images --query Images[*].[Architecture,CreationDate,Hypervisor,ImageId,ImageType,Name,OwnerId,RootDeviceType,VirtualizationType,ProductCodes]"
+query="aws ec2 describe-images --query Images[*].[Architecture,CreationDate,Hypervisor,ImageId,ImageType,Name,OwnerId,RootDeviceType,VirtualizationType,ProductCodes,Platform]"
 
 # get AMI list - this might take a while e.g. tens of minutes.
 while read p; do
