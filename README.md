@@ -7,4 +7,4 @@ TODO
 
 * Create rule in parser.pl for product code parsing
 * Create data directory for image data
-* Create lookup tables for enum types (Root Device Type, etc).
+* Create look up procedures for IMAGES table foreign keys insert procedure
