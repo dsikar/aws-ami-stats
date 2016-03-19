@@ -13,7 +13,7 @@ BEGIN
 	DECLARE rdt_id int; 
 	DECLARE vt_id int; 
 	DECLARE pt_id int; 
-	DECLARRE rg_id int;
+	DECLARE rg_id int;
 
 	-- ARCHITECTURE ID LOOKUP
 	SET arch_id = (SELECT ID FROM ARCHITECTURE WHERE `TYPE` = arch);
