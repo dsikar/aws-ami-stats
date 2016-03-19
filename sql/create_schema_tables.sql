@@ -97,7 +97,7 @@ SET character_set_client = @saved_cs_client;
 DROP TABLE IF EXISTS `REGIONNAME`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `REGIONCODE` (
+CREATE TABLE `REGIONNAME` (
   `ID` int(11) NOT NULL auto_increment,
   `NAME` varchar(14) NOT NULL,
   PRIMARY KEY  (`ID`),

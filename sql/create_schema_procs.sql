@@ -8,7 +8,7 @@ BEGIN
 
 	DECLARE arch_id INT;
 	DECLARE parsed_cd char(19);
-	DECLARE hv_id int
+	DECLARE hv_id int;
 	DECLARE it_id int; 
 	DECLARE rdt_id int; 
 	DECLARE vt_id int; 
