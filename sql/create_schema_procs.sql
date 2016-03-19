@@ -8,7 +8,12 @@ BEGIN
 
 	DECLARE arch_id INT;
 	DECLARE parsed_cd char(19);
-	DECLARE hv_id int; it_id int; rdt_id int; vt_id int; pt_id int; rg_id int;
+	DECLARE hv_id int
+	DECLARE it_id int; 
+	DECLARE rdt_id int; 
+	DECLARE vt_id int; 
+	DECLARE pt_id int; 
+	DECLARRE rg_id int;
 
 	-- ARCHITECTURE ID LOOKUP
 	SET arch_id = (SELECT ID FROM ARCHITECTURE WHERE `TYPE` = arch);
