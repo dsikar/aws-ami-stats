@@ -90,14 +90,14 @@ CREATE PROCEDURE uspUpdateImageProductCode(ami_id VARCHAR(21), tp char(24), cd c
 BEGIN
 	-- PRODUCTCODETYPE_ID LOOKUP
 	DECLARE pct_id INT;
-        SET pctid = (SELECT ID FROM PRODUCTCODETYPE WHERE `TYPE` = tp);
-        IF pctid IS NULL THEN
+        SET pct_id = (SELECT ID FROM PRODUCTCODETYPE WHERE `TYPE` = tp);
+        IF pct_id IS NULL THEN
 	        INSERT INTO PRODUCTCODETYPE (`TYPE`)
 	        VALUES (tp);
-	        SET pctid = @@IDENTITY;
+	        SET pct_id = @@IDENTITY;
         END IF;
 	
-	UPDATE IMAGES SET PRODUCTCODE = cd, PRODUCTCODETYPE_ID = pctid
+	UPDATE IMAGES SET PRODUCTCODE = cd, PRODUCTCODETYPE_ID = pct_id
 	WHERE IMAGEID = ami_id; 
 	
 END
