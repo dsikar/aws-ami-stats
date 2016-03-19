@@ -94,14 +94,14 @@ CREATE TABLE `PLATFORM` (
 SET character_set_client = @saved_cs_client;
 
 -- REGIONCODE; us-east-1, etc
-DROP TABLE IF EXISTS `REGIONCODE`;
+DROP TABLE IF EXISTS `REGIONNAME`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `REGIONCODE` (
   `ID` int(11) NOT NULL auto_increment,
-  `CODE` varchar(14) NOT NULL,
+  `NAME` varchar(14) NOT NULL,
   PRIMARY KEY  (`ID`),
-  UNIQUE KEY `IDX_CODE` (`CODE`)
+  UNIQUE KEY `IDX_CODE` (`NAME`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 

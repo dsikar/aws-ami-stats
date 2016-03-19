@@ -8,21 +8,70 @@ BEGIN
 
 	DECLARE arch_id INT;
 	DECLARE parsed_cd char(19);
+	DECLARE hv_id int; it_id int; rdt_id int; vt_id int; pt_id int; rg_id int;
 
 	-- ARCHITECTURE ID LOOKUP
-	SET arch_id = (SELECT ID FROM ARCHITECTURE WHERE TYPo = arch);
+	SET arch_id = (SELECT ID FROM ARCHITECTURE WHERE `TYPE` = arch);
 	IF arch_id IS NULL THEN	
-                INSERT INTO ARCHITECTURE (`TYPE`)
-                VALUES (arch);
-                SET arch_id = @@IDENTITY;
-        END IF;		
+        INSERT INTO ARCHITECTURE (`TYPE`)
+        VALUES (arch);
+        SET arch_id = @@IDENTITY;
+    END IF;	
+
 	-- CREATION DATE
 	-- Expected Format: 2010-08-16T23:18:19.000Z 
 	SET parsed_cd = CONCAT(SUBSTRING(cd, 1, 10), " ", SUBSTRING(cd, 12, 8));
 
-	-- TODO remaining columns
-	INSERT INTO IMAGES (ARCHITECTURE_ID,CREATIONDATE) -- ,HYPERVISOR_ID,IMAGEID,IMAGETYPE_ID,NAME,OWNERID,ROOTDEVICETYPE_ID,VIRTUALIZATIONTYPE_ID,PLATFORM_ID,REGIONCODE_ID)
-	VALUES (arch_id, parsed_cd); -- , hv_id, ii, it_id, iname, ownid, rdt_id, vt_id, pt_id, rg_id);
+	-- HYPERVISOR ID LOOKUP
+	SET hv_id = (SELECT ID FROM HYPERVISOR WHERE `TYPE` = hv);
+	IF hv_id IS NULL THEN	
+        INSERT INTO HYPERVISOR (`TYPE`)
+        VALUES (hv);
+        SET hv_id = @@IDENTITY;
+    END IF;	
+
+	-- IMAGETYPE ID LOOKUP
+	SET it_id = (SELECT ID FROM IMAGETYPE WHERE `TYPE` = it);
+	IF it_id IS NULL THEN	
+        INSERT INTO IMAGETYPE (`TYPE`)
+        VALUES (it);
+        SET it_id = @@IDENTITY;
+    END IF;	
+
+	-- ROOTDEVICETYPE ID LOOKUP
+	SET rdt_id = (SELECT ID FROM ROOTDEVICETYPE WHERE `TYPE` = rdt);
+	IF rdt_id IS NULL THEN	
+        INSERT INTO ROOTDEVICETYPE (`TYPE`)
+        VALUES (rdt);
+        SET rdt_id = @@IDENTITY;
+    END IF;    
+
+	-- VIRTUALIZATIONTYPE ID LOOKUP
+	SET vt_id = (SELECT ID FROM VIRTUALIZATIONTYPE WHERE `TYPE` = vt);
+	IF vt_id IS NULL THEN	
+        INSERT INTO VIRTUALIZATIONTYPE (`TYPE`)
+        VALUES (vt);
+        SET vt_id = @@IDENTITY;
+    END IF;    
+
+	-- PLATFORM ID LOOKUP
+	SET pt_id = (SELECT ID FROM PLATFORM WHERE `TYPE` = pt);
+	IF pt_id IS NULL THEN	
+        INSERT INTO PLATFORM (`TYPE`)
+        VALUES (pt);
+     	SET pt_id = @@IDENTITY;
+    END IF;
+
+	-- REGIONNAME ID LOOKUP
+	SET rg_id = (SELECT ID FROM REGIONNAME WHERE `NAME` = rg);
+	IF rg_id IS NULL THEN	
+        INSERT INTO REGIONNAME (`NAME`)
+        VALUES (rg);
+     	SET rg_id = @@IDENTITY;
+    END IF;
+
+	INSERT INTO IMAGES (ARCHITECTURE_ID,CREATIONDATE,HYPERVISOR_ID,IMAGEID,IMAGETYPE_ID,NAME,OWNERID,ROOTDEVICETYPE_ID,VIRTUALIZATIONTYPE_ID,PLATFORM_ID,REGIONCODE_ID)
+	VALUES (arch_id, parsed_cd, hv_id, ii, it_id, iname, ownid, rdt_id, vt_id, pt_id, rg_id);
 
 END
 %%
@@ -35,12 +84,12 @@ CREATE PROCEDURE uspUpdateImageProductCode(ami_id VARCHAR(21), tp char(24), cd c
 
 BEGIN
 	-- PRODUCTCODETYPE_ID LOOKUP
-	DECLARE pctid INT;
+	DECLARE pct_id INT;
         SET pctid = (SELECT ID FROM PRODUCTCODETYPE WHERE `TYPE` = tp);
         IF pctid IS NULL THEN
-                INSERT INTO PRODUCTCODETYPE (`TYPE`)
-                VALUES (tp);
-                SET pctid = @@IDENTITY;
+	        INSERT INTO PRODUCTCODETYPE (`TYPE`)
+	        VALUES (tp);
+	        SET pctid = @@IDENTITY;
         END IF;
 	
 	UPDATE IMAGES SET PRODUCTCODE = cd, PRODUCTCODETYPE_ID = pctid
