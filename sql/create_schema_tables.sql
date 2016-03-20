@@ -13,7 +13,7 @@ CREATE TABLE `IMAGES` (
   `ROOTDEVICETYPE_ID` int(11) NOT NULL,
   `VIRTUALIZATIONTYPE_ID` int(11) NOT NULL,
   `PLATFORM_ID` INT(11) NOT NULL,
-  `PRODUCTCODETYPE_ID` int(3) NULL,
+  `PRODUCTCODETYPE_ID` int(11) NULL,
   `PRODUCTCODE` varchar(30) NULL, 
   `REGIONCODE_ID` int(11) NOT NULL,
   PRIMARY KEY  (`ID`),
@@ -27,7 +27,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `ARCHITECTURE` (
   `ID` int(11) NOT NULL auto_increment,
-  `TYPE` char(3) NOT NULL,
+  `TYPE` char(6) NOT NULL,
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `IDX_TYPE` (`TYPE`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -63,7 +63,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `ROOTDEVICETYPE` (
   `ID` int(11) NOT NULL auto_increment,
-  `TYPE` varchar(8) NOT NULL,
+  `TYPE` varchar(14) NOT NULL,
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `IDX_TYPE` (`TYPE`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -75,7 +75,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `VIRTUALIZATIONTYPE` (
   `ID` int(11) NOT NULL auto_increment,
-  `TYPE` varchar(8) NOT NULL,
+  `TYPE` varchar(11) NOT NULL,
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `IDX_TYPE` (`TYPE`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -89,7 +89,7 @@ CREATE TABLE `PLATFORM` (
   `ID` int(11) NOT NULL auto_increment,
   `TYPE` varchar(7) NOT NULL,
   PRIMARY KEY  (`ID`),
-  UNIQUE KEY `IDX_CODE` (`TYPE`)
+  UNIQUE KEY `IDX_TYPE` (`TYPE`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
@@ -101,7 +101,7 @@ CREATE TABLE `REGIONNAME` (
   `ID` int(11) NOT NULL auto_increment,
   `NAME` varchar(14) NOT NULL,
   PRIMARY KEY  (`ID`),
-  UNIQUE KEY `IDX_CODE` (`NAME`)
+  UNIQUE KEY `IDX_NAME` (`NAME`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
@@ -111,9 +111,9 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `PRODUCTCODETYPE` (
   `ID` int(11) NOT NULL auto_increment,
-  `TYPE` varchar(14) NOT NULL,
+  `TYPE` varchar(11) NOT NULL,
   PRIMARY KEY  (`ID`),
-  UNIQUE KEY `IDX_CODE` (`TYPE`)
+  UNIQUE KEY `IDX_TYPE` (`TYPE`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 

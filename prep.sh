@@ -7,7 +7,7 @@
 #########################################
 
 reg_file="$HOME/regions.txt"
-
+data_folder="$HOME/data"
 # delete region code list if exist
 if [ -f "$reg_file" ] ; then
 	rm -f "$reg_file"
@@ -23,5 +23,5 @@ query="aws ec2 describe-images --query Images[*].[Architecture,CreationDate,Hype
 while read p; do
 	date=$(date)
 	echo "$date - Getting images for EC2 region $p"
-	eval "$query --region $p > $p.amis"
+	eval "$query --region $p > $data_folder/$p.amis"
 done <$reg_file

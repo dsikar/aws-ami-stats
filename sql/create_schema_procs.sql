@@ -2,7 +2,7 @@ drop procedure if exists uspInsertImage;
 DELIMITER %%
 CREATE PROCEDURE uspInsertImage(arch VARCHAR(6), cd char(24), hv char(3), 
 				ii varchar(21), it varchar(7), iname varchar(120), 
-				ownid varchar(18), rdt varchar(14), vt varchar(11),  
+				ownid varchar(18), rdt varchar(14), vt varchar(14),  
 				pt varchar(7), rg varchar(14))
 BEGIN
 
@@ -85,7 +85,7 @@ DELIMITER ;
 
 drop procedure if exists uspUpdateImageProductCode;
 DELIMITER %%
-CREATE PROCEDURE uspUpdateImageProductCode(ami_id VARCHAR(21), tp char(24), cd char(3))
+CREATE PROCEDURE uspUpdateImageProductCode(ami_id VARCHAR(21), tp varchar(11), cd char(30))
 
 BEGIN
 	-- PRODUCTCODETYPE_ID LOOKUP

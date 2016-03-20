@@ -18,7 +18,7 @@ while(<FILE>)
 	} else {
 		my $code = $list[0];
 		my $type = $list[1];
-		insert_product_code($ami, $type, $code, $region);
+		insert_product_code($ami, $type, $code);
 	}
 }
 
@@ -30,15 +30,15 @@ sub insert_ami
 	$query .= ", " . "\\\"$list[5]\\\"" . ", ";
 	$query .= "\\\"$list[6]\\\"" . ", " . "\\\"$list[7]\\\"" . ", " . "\\\"$list[8]\\\"" . ", " . "\\\"$list[9]\\\"" . ", "; 
 	$query .= "\\\"$region\\\");\"";
-	# system("mysql \"aws_images\" -e $query");
+	system("mysql \"aws_images\" -e $query");
 	print "$query\n";
 	#die;
 }
 
 sub insert_product_code
 {
-	my ($ami, $type, $code, $region) = @_;
-	my $query =  "\"call uspUpdateImageProductCode(" . "\\\"$ami\\\"" . ", " . "\\\"$type\\\"" . ", " ."\\\"$code\\\"" . ", " . "\\\"$region\\\");\"";
-        # system("mysql \"aws_images\" -e $query");
+	my ($ami, $type, $code) = @_;
+	my $query =  "\"call uspUpdateImageProductCode(" . "\\\"$ami\\\"" . ", " . "\\\"$type\\\"" . ", " ."\\\"$code\\\");\"";
+        system("mysql \"aws_images\" -e $query");
         print "$query\n";
 }
