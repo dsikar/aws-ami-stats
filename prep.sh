@@ -6,15 +6,15 @@
 #                                       #
 #########################################
 
-reg_file="$HOME/regions.txt"
-data_folder="$HOME/data"
+reg_file="$HOME/aws-ami-stats/regions.txt"
+data_folder="$HOME/aws-ami-stats/data"
 # delete region code list if exist
 if [ -f "$reg_file" ] ; then
 	rm -f "$reg_file"
 fi
 
 # get region code list
-aws ec2 describe-regions | awk '{print $3}' >> ~/regions.txt
+aws ec2 describe-regions | awk '{print $3}' >> $reg_file
 
 # AMI query
 query="aws ec2 describe-images --query Images[*].[Architecture,CreationDate,Hypervisor,ImageId,ImageType,Name,OwnerId,RootDeviceType,VirtualizationType,ProductCodes,Platform]"

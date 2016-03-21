@@ -1,4 +1,2 @@
-/sql/schema.txt
 *.amis
-/sql/newproc.sql
-
+regions.txt

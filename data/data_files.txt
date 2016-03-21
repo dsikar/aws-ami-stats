@@ -1,0 +1,10 @@
+/home/ubuntu/aws-ami-stats/data/ap-northeast-1.amis
+/home/ubuntu/aws-ami-stats/data/ap-northeast-2.amis
+/home/ubuntu/aws-ami-stats/data/ap-southeast-1.amis
+/home/ubuntu/aws-ami-stats/data/ap-southeast-2.amis
+/home/ubuntu/aws-ami-stats/data/eu-central-1.amis
+/home/ubuntu/aws-ami-stats/data/eu-west-1.amis
+/home/ubuntu/aws-ami-stats/data/sa-east-1.amis
+/home/ubuntu/aws-ami-stats/data/us-east-1.amis
+/home/ubuntu/aws-ami-stats/data/us-west-1.amis
+/home/ubuntu/aws-ami-stats/data/us-west-2.amis
