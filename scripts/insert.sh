@@ -1,13 +1,13 @@
 #!/bin/bash
 
-#########################################
-#                                       #
-# Prepare AMI data for every EC2 region #
-#                                       #
-#########################################
+##############################################
+#                                            #
+# Pass AMI data to perl script for db insert #
+#                                            #
+##############################################
 
-data_files="$HOME/aws-ami-stats/data/data_files.txt"
 data_folder="$HOME/aws-ami-stats/data"
+data_files="$data_folder/data_files.txt"
 # delete region code list if exist
 if [ -f "$data_files" ] ; then
 	rm -f "$data_files"
