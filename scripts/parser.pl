@@ -42,7 +42,7 @@ sub insert_ami
 	$query .= "\\\"$list[3]\\\"" . ", " . "\\\"$list[4]\\\"";
 	$query .= ", " . "\\\"$list[5]\\\"" . ", " . "\\\"$list[6]\\\"";
 	$query .= ", " . "\\\"$list[7]\\\"" . ", " . "\\\"$list[8]\\\"";
-	$query . ", " . "\\\"$list[9]\\\"" . ", " . "\\\"$region\\\");\"";
+	$query .= ", " . "\\\"$list[9]\\\"" . ", " . "\\\"$region\\\");\"";
 	system("mysql \"aws_images\" -e $query");
 }
 

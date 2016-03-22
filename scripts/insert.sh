@@ -6,19 +6,20 @@
 #                                            #
 ##############################################
 
-data_folder="$HOME/aws-ami-stats/data"
-data_files="$data_folder/data_files.txt"
+DATA_DIR="$HOME/aws-ami-stats/data"
+DATA_FILES="$DATA_DIR/DATA_FILES.txt"
+SCRIPT_DIR="$HOME/aws-ami-stats/scripts"
 # delete region code list if exist
-if [ -f "$data_files" ] ; then
-	rm -f "$data_files"
+if [ -f "$DATA_FILES" ] ; then
+	rm -f "$DATA_FILES"
 fi
 
 # get region code list
-ls $data_folder/*.amis |  awk '{print $1}' >> $data_files
+ls $DATA_DIR/*.amis |  awk '{print $1}' >> $DATA_FILES
 
 # get AMI list - this might take a while e.g. tens of minutes.
 while read p; do
 	date=$(date)
 	echo "$date - Inserting records for region file $p"
-	eval "perl parser.pl $p"
-done <$data_files
+	eval "perl $SCRIPT_DIR/parser.pl $p"
+done <$DATA_FILES

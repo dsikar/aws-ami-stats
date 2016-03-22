@@ -5,7 +5,6 @@ Compile current Image (AMI, AKI, ARI) stats
 
 TODOS
 
-* Pipe describe-images output straight to insert (do not write to file)
 * Have tables, write queries
 
 ```
