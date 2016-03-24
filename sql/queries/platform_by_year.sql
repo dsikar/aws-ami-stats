@@ -1,41 +1,62 @@
-SELECT 
-	PLATFORM_ID, 
-	YEAR(CREATIONDATE), 
-	Count(*) 
-	FROM IMAGES 
-	WHERE IMAGETYPE_ID = 2 
-	GROUP BY PLATFORM_ID, YEAR(CREATIONDATE) 
-	ORDER BY 2;
+
+-- PLATFORM SPLIT BY YEAR
+
+SELECT y.YEAR, l.Linux, w.Windows, t.Total
+	FROM 
+	(
+		SELECT 
+		DISTINCT YEAR(CREATIONDATE) AS `YEAR` 
+		FROM IMAGES a
+		WHERE YEAR(CREATIONDATE) > 0
+ 	) y,
+	(
+		SELECT 
+		DISTINCT YEAR(CREATIONDATE) AS `YEAR`, COUNT(*) as Linux 
+		FROM IMAGES a
+		INNER JOIN PLATFORM b
+		ON a.PLATFORM_ID = b.ID
+		INNER JOIN IMAGETYPE c
+        ON a.IMAGETYPE_ID = c.ID
+		WHERE b.TYPE = 'None' -- Linux
+		AND c.TYPE = 'Machine' -- AMI
+		GROUP BY 1
+ 	) l,
+	(
+		SELECT 
+		DISTINCT YEAR(CREATIONDATE) AS `YEAR`, COUNT(*) as Windows
+		FROM IMAGES a
+		INNER JOIN PLATFORM b
+		ON a.PLATFORM_ID = b.ID
+		INNER JOIN IMAGETYPE c
+        ON a.IMAGETYPE_ID = c.ID
+		WHERE b.TYPE = 'windows' -- Windows
+		AND c.TYPE = 'Machine' -- AMI
+		GROUP BY 1
+ 	) w,
+	(
+		SELECT 
+		DISTINCT YEAR(CREATIONDATE) AS `YEAR`, COUNT(*) as Total
+		FROM IMAGES a
+		INNER JOIN PLATFORM b
+		ON a.PLATFORM_ID = b.ID
+		INNER JOIN IMAGETYPE c
+        ON a.IMAGETYPE_ID = c.ID
+		WHERE c.TYPE = 'Machine' -- AMI
+		GROUP BY 1
+ 	) t
+WHERE y.YEAR = l.YEAR
+AND y.YEAR = w.YEAR
+AND y.YEAR = t.YEAR
+ORDER BY 1
+
+
 /*
 
 TODO
 1. Change format
-	1.1 Headers for 1st year: YEAR, Linux (%), Windows(%), Total 
-	1.2 For every following year: YEAR, Linux (% +-%), Windows(% +-%), Total (+-%)
+	1.1 Headers for 1st year (MIN) and last (MAX) : YEAR, Linux (%), Windows(%), Total 
+	1.2 For every year in between: YEAR, Linux (% +-%), Windows(% +-%), Total (+-%)
 
 2. Investigate Missing dates
 
-+-------------+--------------------+----------+
-| PLATFORM_ID | YEAR(CREATIONDATE) | Count(*) |
-+-------------+--------------------+----------+
-|           1 |                  0 |     2205 |
-|           2 |                  0 |       15 |
-|           1 |               2009 |      174 |
-|           2 |               2009 |        8 |
-|           1 |               2010 |     2539 |
-|           2 |               2010 |       32 |
-|           2 |               2011 |       13 |
-|           1 |               2011 |     4628 |
-|           2 |               2012 |       76 |
-|           1 |               2012 |    10756 |
-|           1 |               2013 |    14564 |
-|           2 |               2013 |      179 |
-|           2 |               2014 |      293 |
-|           1 |               2014 |    54220 |
-|           1 |               2015 |   185953 |
-|           2 |               2015 |     1609 |
-|           1 |               2016 |    55582 |
-|           2 |               2016 |      451 |
-+-------------+--------------------+----------+
 
-*/
