@@ -1,6 +1,18 @@
 
 -- PLATFORM SPLIT BY YEAR
 
+DROP TABLE IF EXISTS TMP_PLAT_SBY;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `TMP_PLAT_SBY` (
+  Year int(11) NOT NULL,
+  Linux int(11) NOT NULL,
+  Windows int(11) NOT NULL,
+  Total int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+INSERT INTO TMP_PLAT_SBY (Year, Linux, Windows, Total) 
 SELECT y.YEAR, l.Linux, w.Windows, t.Total
 	FROM 
 	(
