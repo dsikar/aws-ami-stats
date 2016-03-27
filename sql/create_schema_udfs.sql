@@ -22,13 +22,14 @@ BEGIN
 		SELECT Linux INTO @val1 FROM TMP_PLAT_SBY WHERE Year = diffYear;
 		SELECT Total INTO @val2 FROM TMP_PLAT_SBY WHERE Year = diffYear;
 		SET @val1 = @val1/@val2*100;
-		SET strRes = CONCAT("(", Convert(CONVERT(@val1, SIGNED), CHAR), "%)");
+		SET strRes = CONCAT("(", Convert(CONVERT(@val1, DECIMAL(4,2)), CHAR), "%)");
 		RETURN (strRes);
     ELSEIF col = "Windows" THEN
         SELECT Windows INTO @val1 FROM TMP_PLAT_SBY WHERE Year = diffYear;
         SELECT Total INTO @val2 FROM TMP_PLAT_SBY WHERE Year = diffYear;
         SET @val1 = @val1/@val2*100;
-        SET strRes = CONCAT("(", Convert(CONVERT(@val1, SIGNED), CHAR), "%)");
+        SET strRes = CONCAT("(", Convert(CONVERT(@val1, DECIMAL(4,2)), CHAR), "%)");
+		RETURN (strRes);
     ELSEIF col = "Total" THEN
 		IF (diffYear = @minyear) THEN
 			SET strRes = "(N/A)";
