@@ -1,13 +1,13 @@
 -- USER DEFINED FUNCTIONS
 
---  1.1 Headers for 1st year (MIN) and last (MAX) : YEAR, Linux (%), Windows(%), Total
---  1.2 For every year in between: YEAR, Linux(%), Windows (%), Total (+-%)
+--  1.1 Headers for 1st year (MIN) and last (MAX) : YEAR, hvm (%), paravirtual(%), Total
+--  1.2 For every year in between: YEAR, hvm(%), paravirtual (%), Total (+-%)
 -- TODO charge % to float with two decimal places
-DROP FUNCTION IF EXISTS uspDiffYear;
+DROP FUNCTION IF EXISTS udfDiffYearVirt;
 
 DELIMITER $$
  
-CREATE FUNCTION uspDiffYear(diffYear int, col varchar(10)) RETURNS VARCHAR(10)
+CREATE FUNCTION udfDiffYearVirt(diffYear int, col varchar(11)) RETURNS VARCHAR(10)
     DETERMINISTIC
 BEGIN
 	DECLARE minyear INT;
@@ -16,17 +16,17 @@ BEGIN
 	DECLARE sign char(1); 
     DECLARE strRes varchar(10);
 
-	SELECT MIN(Year) INTO @minyear FROM TMP_PLAT_SBY; -- cleared 0 year in prep script
+	SELECT MIN(Year) INTO @minyear FROM TMP_VIRT_SBY; -- cleared 0 year in prep script
 
-	IF col = "Linux" THEN
-		SELECT Linux INTO @val1 FROM TMP_PLAT_SBY WHERE Year = diffYear;
-		SELECT Total INTO @val2 FROM TMP_PLAT_SBY WHERE Year = diffYear;
+	IF col = "hvm" THEN
+		SELECT hvm INTO @val1 FROM TMP_VIRT_SBY WHERE Year = diffYear;
+		SELECT Total INTO @val2 FROM TMP_VIRT_SBY WHERE Year = diffYear;
 		SET @val1 = @val1/@val2*100;
 		SET strRes = CONCAT("(", Convert(CONVERT(@val1, DECIMAL(4,2)), CHAR), "%)");
 		RETURN (strRes);
-    ELSEIF col = "Windows" THEN
-        SELECT Windows INTO @val1 FROM TMP_PLAT_SBY WHERE Year = diffYear;
-        SELECT Total INTO @val2 FROM TMP_PLAT_SBY WHERE Year = diffYear;
+    ELSEIF col = "paravirtual" THEN
+        SELECT paravirtual INTO @val1 FROM TMP_VIRT_SBY WHERE Year = diffYear;
+        SELECT Total INTO @val2 FROM TMP_VIRT_SBY WHERE Year = diffYear;
         SET @val1 = @val1/@val2*100;
         SET strRes = CONCAT("(", Convert(CONVERT(@val1, DECIMAL(4,2)), CHAR), "%)");
 		RETURN (strRes);
@@ -35,8 +35,8 @@ BEGIN
 			SET strRes = "(N/A)";
 			RETURN strRes;
 		END IF;
-        SELECT Total INTO @val1 FROM TMP_PLAT_SBY WHERE Year = diffYear;
-        SELECT Total INTO @val2 FROM TMP_PLAT_SBY WHERE Year = diffYear - 1;
+        SELECT Total INTO @val1 FROM TMP_VIRT_SBY WHERE Year = diffYear;
+        SELECT Total INTO @val2 FROM TMP_VIRT_SBY WHERE Year = diffYear - 1;
         SET @val1 = @val1/@val2*100;
         SET @res = @val1;
         IF @val1 > @val2 THEN
@@ -50,7 +50,7 @@ BEGIN
         RETURN (strRes);
 	END IF;
 
-	SET strRes = "(N/A)*";
+	-- SET strRes = "(N/A)*";
 	 
  RETURN (strRes); 
 END

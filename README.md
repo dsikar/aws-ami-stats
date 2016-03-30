@@ -49,15 +49,15 @@ Virtualization Type split by year
 
 Output suggests 2016 will be the year hvm takes the lead
 ```
-mysql -h "localhost" "aws_images" < virtualizationtype_by_year.sql
+mysql -h "localhost" "aws_images" < queries/virtualizationtype_by_year.sql
 
-Year    hvm     paravirtual     Total
-2009    11      171     		182
-2010    607     1964    		2571
-2011    641     4000    		4641
-2012    1318    9514    		10832
-2013    2224    12519   		14743
-2014    14942   39571   		54513
-2015    63784   123778  		187562
-2016    30991   25042   		56033
+Year    hvm     Tot%    	paravirtual     Tot%    		Total   Year inc.
+2009    11      (6.04%) 	171    			(93.96%)        182     (N/A)
+2010    607     (23.61%)    1964   			(76.39%)        2571    (+1413%)
+2011    641     (13.81%)    4000   			(86.19%)        4641    (+181%)
+2012    1318    (12.17%)    9514   			(87.83%)        10832   (+233%)
+2013    2224    (15.09%)    12519  			(84.91%)        14743   (+136%)
+2014    14942   (27.41%)    39571  			(72.59%)        54513   (+370%)
+2015    63784   (34.01%)    123778 			(65.99%)        187562  (+344%)
+2016    30991   (55.31%)    25042  			(44.69%)        56033   (+30%)
 ```

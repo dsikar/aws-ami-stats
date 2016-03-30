@@ -9,9 +9,9 @@
 SELECT 
 	Year, 
 	hvm, 
-	-- uspDiffYear(Year, "Linux") as 'Tot%', 
+	udfDiffYearVirt(Year, "hvm") as 'Tot%', 
 	paravirtual, 
-	-- uspDiffYear(Year, "Windows") as 'Tot%', 
-	Total -- ,
-	-- uspDiffYear(Year, "Total") as 'Year inc.'
+	udfDiffYearVirt(Year, "paravirtual") as 'Tot%', 
+	Total,
+	udfDiffYearVirt(Year, "Total") as 'Year inc.'
 	FROM TMP_VIRT_SBY ORDER BY Year;
