@@ -1,0 +1,64 @@
+
+-- VIRTUALIZATIONTYPE SPLIT BY YEAR - GENERATE DATA
+
+DROP TABLE IF EXISTS TMP_VIRT_SBY;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `TMP_VIRT_SBY` (
+  Year int(11) NOT NULL,
+  hvm int(11) NOT NULL,
+  paravirtual int(11) NOT NULL,
+  Total int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+INSERT INTO TMP_VIRT_SBY (Year, hvm, paravirtual, Total) 
+SELECT y.YEAR, h.hvm, p.paravirtual, t.Total
+	FROM 
+	(
+		SELECT 
+		DISTINCT YEAR(CREATIONDATE) AS `YEAR` 
+		FROM IMAGES a
+		WHERE YEAR(CREATIONDATE) > 0
+ 	) y,
+	(
+		SELECT 
+		DISTINCT YEAR(CREATIONDATE) AS `YEAR`, COUNT(*) as hvm
+		FROM IMAGES a
+		INNER JOIN VIRTUALIZATIONTYPE b
+		ON a.VIRTUALIZATIONTYPE_ID = b.ID
+		INNER JOIN IMAGETYPE c
+        ON a.IMAGETYPE_ID = c.ID
+		WHERE b.TYPE = 'hvm' -- hvm
+		AND c.TYPE = 'Machine' -- AMI
+		GROUP BY 1
+ 	) h,
+	(
+		SELECT 
+		DISTINCT YEAR(CREATIONDATE) AS `YEAR`, COUNT(*) as paravirtual
+		FROM IMAGES a
+		INNER JOIN VIRTUALIZATIONTYPE b
+		ON a.VIRTUALIZATIONTYPE_ID = b.ID
+		INNER JOIN IMAGETYPE c
+        ON a.IMAGETYPE_ID = c.ID
+		WHERE b.TYPE = 'paravirtual' -- paravirtual 
+		AND c.TYPE = 'Machine' -- AMI
+		GROUP BY 1
+ 	) p,
+	(
+		SELECT 
+		DISTINCT YEAR(CREATIONDATE) AS `YEAR`, COUNT(*) as Total
+		FROM IMAGES a
+		INNER JOIN VIRTUALIZATIONTYPE b
+		ON a.VIRTUALIZATIONTYPE_ID = b.ID
+		INNER JOIN IMAGETYPE c
+        ON a.IMAGETYPE_ID = c.ID
+		WHERE c.TYPE = 'Machine' -- AMI
+		GROUP BY 1
+ 	) t
+WHERE y.YEAR = h.YEAR
+AND y.YEAR = p.YEAR
+AND y.YEAR = t.YEAR
+ORDER BY 1;
+
+
